@@ -12,7 +12,14 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public'));
+
+// Servir archivos estáticos
+app.use(express.static('public', { extensions: ['html'] }));
+
+// Manejar rutas del frontend (SPA)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Configuración de la base de datos
 const db = mysql.createConnection({
