@@ -14,8 +14,23 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Servir archivos estáticos
+// Servir archivos estáticos desde la carpeta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Ruta para el archivo CSS
+app.get('/styles.css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'styles.css'));
+});
+
+// Ruta para el archivo JavaScript
+app.get('/script.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'script.js'));
+});
+
+// Ruta para el logo
+app.get('/logo-aquatour.svg', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'logo-aquatour.svg'));
+});
 
 // Manejar rutas de la API
 app.use('/api', (req, res, next) => {
