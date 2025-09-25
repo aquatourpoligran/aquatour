@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -14,9 +15,15 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Servir archivos estáticos
-app.use(express.static('public', { extensions: ['html'] }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Manejar rutas del frontend (SPA)
+// Manejar rutas de la API
+app.use('/api', (req, res, next) => {
+  // Aquí van tus rutas de la API
+  next();
+});
+
+// Para todas las demás rutas, servir el index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
